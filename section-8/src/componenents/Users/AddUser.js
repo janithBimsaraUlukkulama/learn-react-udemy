@@ -5,10 +5,21 @@ import Button from "../UI/Button";
 
 const AddUser = props => {
     const [enteredUserName, setEnteredUserName] = useState('');
-    const [enteredUAge, setEnteredAge] = useState('');
+    const [enteredAge, setEnteredAge] = useState('');
 
     const addUserHandler = (event) => {
         event.preventDefault(); // prevent default form on submit
+
+        if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0) {
+            return;
+        }
+
+        if (+enteredAge < 1) {
+            return;
+        }
+
+        setEnteredUserName('');
+        setEnteredAge('');
     }
 
     const userNameChangeHandler = (event) => {
@@ -23,9 +34,9 @@ const AddUser = props => {
         <Card className={classes.input}>
             <form onSubmit={addUserHandler}>
                 <label htmlFor="userName">Username</label>
-                <input id="userName" type="text" onChange={userNameChangeHandler}/>
+                <input id="userName" type="text" value={enteredUserName} onChange={userNameChangeHandler}/>
                 <label htmlFor="age">Age (Years)</label>
-                <input id="age" type="number" onChange={ageChangeHandler}/>
+                <input id="age" type="number" value={enteredAge} onChange={ageChangeHandler}/>
                 <Button type="submit">Add User</Button>
             </form>
         </Card>)
